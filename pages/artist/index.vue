@@ -27,11 +27,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in desserts" :key="item.name">
+            <tr v-for="item in artistLists" :key="item.id">
+              <td>
+                <img
+                  class="artist_img"
+                  :src="item.image_url"
+                  alt="artist_img"
+                />
+              </td>
               <td>{{ item.name }}</td>
-              <td>{{ item.calories }}</td>
               <td></td>
-              <td></td>
+              <td>{{ item.type }}</td>
               <td><v-btn color="warning">แก้ไข</v-btn></td>
               <td><v-btn color="error">ลบ</v-btn></td>
             </tr>
@@ -42,25 +48,49 @@
   </v-layout>
 </template>
 
+<style scoped>
+.artist_img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+</style>
+
 <script>
+import axios from "axios";
 export default {
+  mounted() {
+    this.getArtistList();
+  },
   data() {
     return {
-      desserts: [
-        {
-          name: "The Toy",
-          calories: "The Toy"
-        },
-        {
-          name: "Black Pink",
-          calories: "Black Pink"
-        },
-        {
-          name: "BTS",
-          calories: "BTS"
-        }
-      ]
+      artistLists: {
+        name: ""
+      }
     };
+  },
+  methods: {
+    getArtistList() {
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
+          {
+            limit: 2
+          },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Basic YWlzc3RhcmJvb3N0ZXI6Ym9vc3RlcmFpc0AyMDE5"
+            }
+          }
+        )
+        .then(response => {
+          if (response.data.code == 0) {
+            this.artistLists = response.data.data;
+            console.log(this.artistLists);
+          }
+        });
+    }
   }
 };
 </script>
