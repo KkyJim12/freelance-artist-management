@@ -64,7 +64,7 @@
             solo
             v-model="poster_url"
           ></v-text-field>
-          <v-btn @click="addArtist()" color="success" block>ยืนยัน</v-btn>
+          <v-btn @click="updateArtist()" color="success" block>ยืนยัน</v-btn>
         </v-form>
       </v-card>
     </v-flex>
@@ -74,8 +74,12 @@
 <script>
 import axios from "axios";
 export default {
+  mounted() {
+    this.getArtistById();
+  },
   data() {
     return {
+      id: "",
       artist_name: "",
       boosts: "",
       enabled: true,
@@ -87,16 +91,43 @@ export default {
     };
   },
   methods: {
-    addArtist() {
+    getArtistById() {
       axios
         .post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/add_artist",
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
           {
+            limit: 1,
+            last_id: parseInt(this.$route.params.id)
+          },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Basic YWlzc3RhcmJvb3N0ZXI6Ym9vc3RlcmFpc0AyMDE5"
+            }
+          }
+        )
+        .then(response => {
+          this.id = response.data.data[0].id;
+          this.artist_name = response.data.data[0].artist_name;
+          this.boosts = response.data.data[0].boosts;
+          this.image_url = response.data.data[0].image_url;
+          this.keywords = response.data.data[0].keywords;
+          this.mission = response.data.data[0].mission;
+          this.name = response.data.data[0].name;
+          this.poster_url = response.data.data[0].poster_url;
+        });
+    },
+    updateArtist() {
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/update_artist_by_artist_id",
+          {
+            id: this.id,
             artist_name: this.artist_name,
             boost: this.boost,
             enabled: this.enabled,
             image_url: this.image_url,
-            keywords: this.keywords.split(","),
+            keywords: this.keywords,
             mission: this.mission,
             name: this.name,
             poster_url: this.poster_url

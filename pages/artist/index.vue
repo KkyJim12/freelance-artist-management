@@ -8,7 +8,7 @@
           </v-col>
           <v-spacer></v-spacer>
           <v-col class="text-right">
-            <nuxt-link to="/artist/create"
+            <nuxt-link to="/artist/create" style="text-decoration:none;"
               ><v-btn color="success">สร้าง</v-btn></nuxt-link
             >
           </v-col>
@@ -38,8 +38,14 @@
               <td>{{ item.name }}</td>
               <td></td>
               <td>{{ item.type }}</td>
-              <td><v-btn color="warning">แก้ไข</v-btn></td>
-              <td><v-btn color="error">ลบ</v-btn></td>
+              <td>
+                <v-btn :to="'/artist/' + item.id + '/edit'" color="warning"
+                  >แก้ไข</v-btn
+                >
+              </td>
+              <td>
+                <v-btn color="error" @click="deleteArtist(item.id)">ลบ</v-btn>
+              </td>
             </tr>
           </tbody>
         </template>
@@ -75,7 +81,7 @@ export default {
         .post(
           "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
           {
-            limit: 2
+            limit: 100
           },
           {
             headers: {
@@ -89,6 +95,24 @@ export default {
             this.artistLists = response.data.data;
             console.log(this.artistLists);
           }
+        });
+    },
+    deleteArtist(myid) {
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/delete_artist_by_artist_id",
+          {
+            id: myid
+          },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Basic YWlzc3RhcmJvb3N0ZXI6Ym9vc3RlcmFpc0AyMDE5"
+            }
+          }
+        )
+        .then(response => {
+          console.log(response.data);
         });
     }
   }
