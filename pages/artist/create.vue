@@ -109,7 +109,10 @@ export default {
           }
         )
         .then(response => {
-          console.log(response.data);
+          console.log(response.data.code);
+          if(response.data.code == 0) {
+            this.$router.push('/artist');
+          }
         });
     }
   }

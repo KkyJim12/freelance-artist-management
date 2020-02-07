@@ -93,7 +93,6 @@ export default {
         .then(response => {
           if (response.data.code == 0) {
             this.artistLists = response.data.data;
-            console.log(this.artistLists);
           }
         });
     },
@@ -112,7 +111,9 @@ export default {
           }
         )
         .then(response => {
-          console.log(response.data);
+          if(response.data.code == 0) {
+            this.getArtistList();
+          }
         });
     }
   }
