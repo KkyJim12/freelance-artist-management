@@ -4,11 +4,11 @@
       <v-container>
         <v-row>
           <v-col>
-            <h1>Artist Management Create</h1>
+            <h1>Video Management Create</h1>
           </v-col>
           <v-spacer></v-spacer>
           <v-col class="text-right">
-            <nuxt-link to="/artist" style="text-decoration:none;"
+            <nuxt-link to="/video" style="text-decoration:none;"
               ><v-btn color="warning">ย้อนกลับ</v-btn></nuxt-link
             >
           </v-col>
@@ -90,7 +90,7 @@ export default {
     addArtist() {
       axios
         .post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/add_artist",
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/add_video",
           {
             artist_name: this.artist_name,
             boost: this.boost,

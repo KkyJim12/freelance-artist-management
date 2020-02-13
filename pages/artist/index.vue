@@ -8,9 +8,9 @@
           </v-col>
           <v-spacer></v-spacer>
           <v-col class="text-right">
-            <nuxt-link to="/artist/create" style="text-decoration:none;"
-              ><v-btn color="success">สร้าง</v-btn></nuxt-link
-            >
+            <nuxt-link to="/artist/create" style="text-decoration:none;">
+              <v-btn color="success">สร้าง</v-btn>
+            </nuxt-link>
           </v-col>
         </v-row>
       </v-container>
@@ -29,19 +29,13 @@
           <tbody>
             <tr v-for="item in artistLists" :key="item.id">
               <td>
-                <img
-                  class="artist_img"
-                  :src="item.image_url"
-                  alt="artist_img"
-                />
+                <img class="artist_img" :src="item.image_url" alt="artist_img" />
               </td>
               <td>{{ item.name }}</td>
               <td></td>
               <td>{{ item.type }}</td>
               <td>
-                <v-btn :to="'/artist/' + item.id + '/edit'" color="warning"
-                  >แก้ไข</v-btn
-                >
+                <v-btn :to="'/artist/' + item.id + '/edit'" color="warning">แก้ไข</v-btn>
               </td>
               <td>
                 <v-btn color="error" @click="deleteArtist(item.id)">ลบ</v-btn>
@@ -50,8 +44,13 @@
           </tbody>
         </template>
       </v-simple-table>
-      <div class="text-center">
-        <v-pagination v-model="page" :length="3"></v-pagination>
+      <div class="text-right ma-2">
+        <v-btn @click="previousPage()" color="dark">
+          <v-icon>mdi-arrow-left-thick</v-icon>
+        </v-btn>
+        <v-btn @click="nextPage()" color="dark">
+          <v-icon>mdi-arrow-right-thick</v-icon>
+        </v-btn>
       </div>
     </v-flex>
   </v-layout>
@@ -78,12 +77,51 @@ export default {
     };
   },
   methods: {
+    previousPage() {
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
+          {
+            limit: 10,
+            last_id: this.artistLists[1].id,
+            order: "desc"
+          },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Basic YWlzc3RhcmJvb3N0ZXI6Ym9vc3RlcmFpc0AyMDE5"
+            }
+          }
+        )
+        .then(response => {
+          this.artistLists = response.data.data;
+        });
+    },
+    nextPage() {
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
+          {
+            limit: 10,
+            last_id: this.artistLists[9].id
+          },
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Basic YWlzc3RhcmJvb3N0ZXI6Ym9vc3RlcmFpc0AyMDE5"
+            }
+          }
+        )
+        .then(response => {
+          this.artistLists = response.data.data;
+        });
+    },
     getArtistList() {
       axios
         .post(
           "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
           {
-            limit: 100
+            limit: 10
           },
           {
             headers: {

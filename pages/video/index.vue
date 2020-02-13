@@ -4,13 +4,13 @@
       <v-container>
         <v-row>
           <v-col>
-            <h1>Artist Management</h1>
+            <h1>Video Management</h1>
           </v-col>
           <v-spacer></v-spacer>
           <v-col class="text-right">
-            <nuxt-link to="/artist/create" style="text-decoration:none;"
-              ><v-btn color="success">สร้าง</v-btn></nuxt-link
-            >
+            <nuxt-link to="/video/create" style="text-decoration:none;">
+              <v-btn color="success">สร้าง</v-btn>
+            </nuxt-link>
           </v-col>
         </v-row>
       </v-container>
@@ -19,9 +19,9 @@
           <thead>
             <tr>
               <th class="text-left">รูปภาพ</th>
+              <th class="text-left">ชื่อวิดีโอ</th>
               <th class="text-left">ชื่อศิลปิน</th>
-              <th class="text-left">วันเกิด</th>
-              <th class="text-left">ประเภทศิลปิน</th>
+              <th class="text-left">วิว</th>
               <th class="text-left">แก้ไข</th>
               <th class="text-left">ลบ</th>
             </tr>
@@ -29,19 +29,13 @@
           <tbody>
             <tr v-for="item in artistLists" :key="item.id">
               <td>
-                <img
-                  class="artist_img"
-                  :src="item.image_url"
-                  alt="artist_img"
-                />
+                <img class="artist_img" :src="item.image_url" alt="video_img" />
               </td>
-              <td>{{ item.name }}</td>
-              <td></td>
-              <td>{{ item.type }}</td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.artist_name }}</td>
+              <td>{{item.views}}</td>
               <td>
-                <v-btn :to="'/artist/' + item.id + '/edit'" color="warning"
-                  >แก้ไข</v-btn
-                >
+                <v-btn :to="'/artist/' + item.id + '/edit'" color="warning">แก้ไข</v-btn>
               </td>
               <td>
                 <v-btn color="error" @click="deleteArtist(item.id)">ลบ</v-btn>
@@ -66,7 +60,7 @@
 import axios from "axios";
 export default {
   mounted() {
-    this.getArtistList();
+    this.getVideoList();
   },
   data() {
     return {
@@ -76,12 +70,12 @@ export default {
     };
   },
   methods: {
-    getArtistList() {
+    getVideoList() {
       axios
         .post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_video",
           {
-            limit: 100
+            limit: 10
           },
           {
             headers: {
@@ -99,7 +93,7 @@ export default {
     deleteArtist(myid) {
       axios
         .post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/delete_artist_by_artist_id",
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/delete_video_by_video_id",
           {
             id: myid
           },
@@ -111,8 +105,8 @@ export default {
           }
         )
         .then(response => {
-          if(response.data.code == 0) {
-            this.getArtistList();
+          if (response.data.code == 0) {
+            this.getVideoList();
           }
         });
     }

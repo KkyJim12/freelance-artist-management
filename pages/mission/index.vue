@@ -71,8 +71,7 @@ export default {
         .post(
           "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_mission",
           {
-            limit: 100,
-            last_id: 2,
+            limit: 10,
             order: "desc"
           },
           {
@@ -88,10 +87,10 @@ export default {
           }
         });
     },
-    deleteArtist(myid) {
+    deleteMission(myid) {
       axios
         .post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/delete_artist_by_artist_id",
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/delete_mission_by_mission_id",
           {
             id: myid
           },
@@ -104,7 +103,7 @@ export default {
         )
         .then(response => {
           if (response.data.code == 0) {
-            this.getArtistList();
+            this.getMissionList();
           }
         });
     }

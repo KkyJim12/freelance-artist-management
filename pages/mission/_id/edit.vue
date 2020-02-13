@@ -102,10 +102,11 @@ export default {
   },
   methods: {
     getMissionInfo() {
-      axios.post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_mission",
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_mission_by_id",
           {
-            artist_id: this.artist_id,
+            id: this.$route.params.id
           },
           {
             headers: {
@@ -117,7 +118,7 @@ export default {
         .then(response => {
           console.log(response.data.code);
           if (response.data.code == 0) {
-            this.$router.push("/mission");
+            this.artist_id = response.data.artist_id;
           }
         });
     },
