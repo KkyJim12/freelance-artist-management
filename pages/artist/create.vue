@@ -17,51 +17,44 @@
       <v-card class="pa-10">
         <v-form ref="form">
           <v-text-field
-            label="Solo"
-            placeholder="ชื่อศิลปิน"
-            solo
+            label="ชื่อศิลปิน"
+            placeholder="กรุณากรอกชื่อศิลปิน"
             v-model="artist_name"
           ></v-text-field>
           <v-text-field
-            label="Solo"
-            placeholder="บูส"
+            label="บูส"
+            placeholder="กรุณากรอกบูส"
             type="number"
-            solo
             v-model="boosts"
           ></v-text-field>
           <v-text-field
-            label="Solo"
+            label="กรุณากรอกรูป"
             placeholder="ลิงค์รูป"
             type="text"
-            solo
             v-model="image_url"
           ></v-text-field>
           <v-text-field
-            label="Solo"
+            label="กรุณากรอกคีย์เวิร์ด"
             placeholder="คีย์เวิร์ด"
             type="text"
-            solo
             v-model="keywords"
           ></v-text-field>
           <v-text-field
-            label="Solo"
-            placeholder="mission"
+            label="mission"
+            placeholder="กรุณากรอก mission"
             type="text"
-            solo
             v-model="mission"
           ></v-text-field>
           <v-text-field
-            label="Solo"
-            placeholder="ชื่อ"
+            label="ชื่อ"
+            placeholder="กรุณากรอก ชื่อ"
             type="text"
-            solo
             v-model="name"
           ></v-text-field>
           <v-text-field
-            label="Solo"
-            placeholder="ลิงค์รูปโปสเตอร์"
+            label="ลิงค์รูปโปสเตอร์"
+            placeholder="กรุณากรอก ลิงค์รูปโปสเตอร์"
             type="text"
-            solo
             v-model="poster_url"
           ></v-text-field>
           <v-btn @click="addArtist()" color="success" block>ยืนยัน</v-btn>

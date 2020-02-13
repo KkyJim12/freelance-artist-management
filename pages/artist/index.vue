@@ -50,6 +50,9 @@
           </tbody>
         </template>
       </v-simple-table>
+      <div class="text-center">
+        <v-pagination v-model="page" :length="3"></v-pagination>
+      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -70,9 +73,8 @@ export default {
   },
   data() {
     return {
-      artistLists: {
-        name: ""
-      }
+      page: 1,
+      artistLists: {}
     };
   },
   methods: {
@@ -111,7 +113,7 @@ export default {
           }
         )
         .then(response => {
-          if(response.data.code == 0) {
+          if (response.data.code == 0) {
             this.getArtistList();
           }
         });

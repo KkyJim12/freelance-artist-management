@@ -94,10 +94,9 @@ export default {
     getArtistById() {
       axios
         .post(
-          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist_by_id",
           {
-            limit: 1,
-            last_id: parseInt(this.$route.params.id)
+            id: parseInt(this.$route.params.id)
           },
           {
             headers: {
@@ -107,14 +106,14 @@ export default {
           }
         )
         .then(response => {
-          this.id = response.data.data[0].id;
-          this.artist_name = response.data.data[0].artist_name;
-          this.boosts = response.data.data[0].boosts;
-          this.image_url = response.data.data[0].image_url;
-          this.keywords = response.data.data[0].keywords;
-          this.mission = response.data.data[0].mission;
-          this.name = response.data.data[0].name;
-          this.poster_url = response.data.data[0].poster_url;
+          this.id = response.data.data.id;
+          this.artist_name = response.data.data.artist_name;
+          this.boosts = response.data.data.boosts;
+          this.image_url = response.data.data.image_url;
+          this.keywords = response.data.data.keywords;
+          this.mission = response.data.data.mission;
+          this.name = response.data.data.name;
+          this.poster_url = response.data.data.poster_url;
         });
     },
     updateArtist() {
