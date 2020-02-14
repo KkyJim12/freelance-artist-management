@@ -16,25 +16,48 @@
       </v-container>
       <v-card class="pa-10">
         <v-form ref="form">
+          <v-select
+            item-value="id"
+            item-text="artist_name"
+            :items="artistLists"
+            label="ศิลปิน"
+            v-model="artist_id"
+            solo
+          ></v-select>
           <v-text-field
             label="Solo"
             placeholder="ชื่อศิลปิน"
             solo
+            type="number"
             v-model="artist_name"
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="บูส"
-            type="number"
+            placeholder="ลิงค์รูปศิลปิน"
             solo
-            v-model="boosts"
+            type="number"
+            v-model="artist_image_url"
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="ลิงค์รูป"
+            placeholder="คอมเมนท์"
+            solo
+            type="number"
+            v-model="comments"
+          ></v-text-field>
+          <v-text-field
+            label="Solo"
+            placeholder="ลิงค์รูปภาพ"
+            type="text"
+            v-model="image_url"
+            solo
+          ></v-text-field>
+          <v-text-field
+            label="Solo"
+            placeholder="หัวข้อ"
             type="text"
             solo
-            v-model="image_url"
+            v-model="title"
           ></v-text-field>
           <v-text-field
             label="Solo"
@@ -45,26 +68,33 @@
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="mission"
+            placeholder="ลิงค์ video"
             type="text"
             solo
-            v-model="mission"
+            v-model="video_url"
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="ชื่อ"
+            placeholder="ประเภท video"
             type="text"
             solo
-            v-model="name"
+            v-model="video_type"
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="ลิงค์รูปโปสเตอร์"
-            type="text"
+            placeholder="วิว"
+            type="number"
             solo
-            v-model="poster_url"
+            v-model="views"
           ></v-text-field>
-          <v-btn @click="addArtist()" color="success" block>ยืนยัน</v-btn>
+          <v-text-field
+            label="Solo"
+            placeholder="เริ่ม"
+            type="date"
+            solo
+            v-model="start"
+          ></v-text-field>
+          <v-btn @click="addVideo()" color="success" block>ยืนยัน</v-btn>
         </v-form>
       </v-card>
     </v-flex>
@@ -74,32 +104,68 @@
 <script>
 import axios from "axios";
 export default {
+  mounted() {
+    this.getArtistList();
+  },
   data() {
     return {
+      artist_id: "",
+      artist_image_url: "",
       artist_name: "",
-      boosts: "",
-      enabled: true,
+      comments: "",
+      desc: "desc",
+      enabled: false,
+      is_highlight: false,
+      is_live: false,
       image_url: "",
       keywords: [],
-      mission: "",
-      name: "",
-      poster_url: ""
+      start: "",
+      title: "",
+      video_url: "",
+      video_type: "",
+      views: "",
+      artistLists: []
     };
   },
   methods: {
-    addArtist() {
+    getArtistList() {
+      axios
+        .post(
+          "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/get_artist",
+          "",
+          {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: "Basic YWlzc3RhcmJvb3N0ZXI6Ym9vc3RlcmFpc0AyMDE5"
+            }
+          }
+        )
+        .then(response => {
+          if (response.data.code == 0) {
+            this.artistLists = response.data.data;
+          }
+        });
+    },
+    addVideo() {
       axios
         .post(
           "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/add_video",
           {
+            artist_id: this.artist_id,
+            artist_image_url: this.artist_image_url,
             artist_name: this.artist_name,
-            boost: this.boost,
+            comments: this.comments,
+            desc: this.desc,
             enabled: this.enabled,
-            image_url: this.image_url,
+            is_highlight: this.is_highlight,
             keywords: this.keywords.split(","),
-            mission: this.mission,
-            name: this.name,
-            poster_url: this.poster_url
+            is_live: this.is_live,
+            image_url: this.image_url,
+            start: this.start,
+            title: this.title,
+            video_url: this.video_url,
+            video_type: this.video_type,
+            views: this.views
           },
           {
             headers: {
@@ -110,8 +176,8 @@ export default {
         )
         .then(response => {
           console.log(response.data.code);
-          if(response.data.code == 0) {
-            this.$router.push('/artist');
+          if (response.data.code == 0) {
+            this.$router.push("/artist");
           }
         });
     }
