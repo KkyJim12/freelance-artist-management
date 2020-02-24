@@ -11,8 +11,10 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxt/config": "^2.11.0",
     "axios": "^0.19.2",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "nuxt-dropzone": "^1.0.4"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0"

@@ -17,47 +17,39 @@
       <v-card class="pa-10">
         <v-form ref="form">
           <v-text-field
-            label="ชื่อศิลปิน"
-            placeholder="กรุณากรอกชื่อศิลปิน"
+            placeholder="ชื่อศิลปิน"
             v-model="artist_name"
+            solo
           ></v-text-field>
           <v-text-field
-            label="บูส"
-            placeholder="กรุณากรอกบูส"
+            placeholder="บูส"
             type="number"
+            solo
             v-model="boosts"
           ></v-text-field>
           <v-text-field
-            label="กรุณากรอกรูป"
-            placeholder="ลิงค์รูป"
-            type="text"
-            v-model="image_url"
-          ></v-text-field>
-          <v-text-field
-            label="กรุณากรอกคีย์เวิร์ด"
             placeholder="คีย์เวิร์ด"
             type="text"
             v-model="keywords"
+            solo
           ></v-text-field>
           <v-text-field
-            label="mission"
-            placeholder="กรุณากรอก mission"
+            placeholder="mission"
             type="text"
             v-model="mission"
+            solo
           ></v-text-field>
           <v-text-field
-            label="ชื่อ"
-            placeholder="กรุณากรอก ชื่อ"
+            placeholder="ชื่อ"
             type="text"
             v-model="name"
+            solo
           ></v-text-field>
-          <v-text-field
-            label="ลิงค์รูปโปสเตอร์"
-            placeholder="กรุณากรอก ลิงค์รูปโปสเตอร์"
-            type="text"
-            v-model="poster_url"
-          ></v-text-field>
-          <v-btn @click="addArtist()" color="success" block>ยืนยัน</v-btn>
+          <label>รูปหลัก</label>
+          <image-upload></image-upload>
+          <label>รูปโปสเตอร์</label>
+          <image-upload></image-upload>
+          <v-btn class="mt-5" @click="addArtist()" color="success" block>ยืนยัน</v-btn>
         </v-form>
       </v-card>
     </v-flex>
@@ -103,8 +95,8 @@ export default {
         )
         .then(response => {
           console.log(response.data.code);
-          if(response.data.code == 0) {
-            this.$router.push('/artist');
+          if (response.data.code == 0) {
+            this.$router.push("/artist");
           }
         });
     }
