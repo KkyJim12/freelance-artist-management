@@ -94,7 +94,13 @@
             solo
             v-model="name"
           ></v-text-field>
-          <v-btn @click="updateMission()" color="success" block>ยืนยัน</v-btn>
+          <label>รูปหลัก</label>
+          <image-upload @image="MainImageUpload"></image-upload>
+          <label>รูป mission</label>
+          <image-upload @image="MissionImageUpload"></image-upload>
+          <v-btn class="mt-5" @click="updateMission()" color="success" block
+            >ยืนยัน</v-btn
+          >
         </v-form>
       </v-card>
     </v-flex>
@@ -126,6 +132,12 @@ export default {
     };
   },
   methods: {
+    MainImageUpload(image) {
+      this.image_url = image;
+    },
+    MissionImageUpload(image) {
+      this.mission_image_url = image;
+    },
     getArtistList() {
       axios
         .post(
@@ -190,7 +202,7 @@ export default {
             mission_desc: this.mission_desc,
             mission_image_url: this.mission_image_url,
             mission_start: this.mission_start,
-            name: this.name,
+            name: this.name
           },
           {
             headers: {

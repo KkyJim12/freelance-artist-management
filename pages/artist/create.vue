@@ -46,10 +46,12 @@
             solo
           ></v-text-field>
           <label>รูปหลัก</label>
-          <image-upload></image-upload>
+          <image-upload @image="MainImageUpload"></image-upload>
           <label>รูปโปสเตอร์</label>
-          <image-upload></image-upload>
-          <v-btn class="mt-5" @click="addArtist()" color="success" block>ยืนยัน</v-btn>
+          <image-upload @image="PosterImageUpload"></image-upload>
+          <v-btn class="mt-5" @click="addArtist()" color="success" block
+            >ยืนยัน</v-btn
+          >
         </v-form>
       </v-card>
     </v-flex>
@@ -72,6 +74,12 @@ export default {
     };
   },
   methods: {
+    MainImageUpload(image) {
+      this.image_url = image;
+    },
+    PosterImageUpload(image) {
+      this.poster_url = image;
+    },
     addArtist() {
       axios
         .post(
@@ -94,7 +102,7 @@ export default {
           }
         )
         .then(response => {
-          console.log(response.data.code);
+          console.log(response.data);
           if (response.data.code == 0) {
             this.$router.push("/artist");
           }

@@ -4,7 +4,7 @@
       <v-container>
         <v-row>
           <v-col>
-            <h1>Artist Management Create</h1>
+            <h1>Artist Management Edit</h1>
           </v-col>
           <v-spacer></v-spacer>
           <v-col class="text-right">
@@ -31,13 +31,6 @@
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="ลิงค์รูป"
-            type="text"
-            solo
-            v-model="image_url"
-          ></v-text-field>
-          <v-text-field
-            label="Solo"
             placeholder="คีย์เวิร์ด"
             type="text"
             solo
@@ -57,14 +50,11 @@
             solo
             v-model="name"
           ></v-text-field>
-          <v-text-field
-            label="Solo"
-            placeholder="ลิงค์รูปโปสเตอร์"
-            type="text"
-            solo
-            v-model="poster_url"
-          ></v-text-field>
-          <v-btn @click="updateArtist()" color="success" block>ยืนยัน</v-btn>
+          <label>รูปหลัก</label>
+          <image-upload @image="MainImageUpload"></image-upload>
+          <label>รูปโปสเตอร์</label>
+          <image-upload @image="PosterImageUpload"></image-upload>
+          <v-btn class="mt-5" @click="updateArtist()" color="success" block>ยืนยัน</v-btn>
         </v-form>
       </v-card>
     </v-flex>
@@ -91,6 +81,12 @@ export default {
     };
   },
   methods: {
+    MainImageUpload(image) {
+      this.image_url = image;
+    },
+    PosterImageUpload(image) {
+      this.poster_url = image;
+    },
     getArtistById() {
       axios
         .post(
@@ -139,8 +135,8 @@ export default {
           }
         )
         .then(response => {
-          if(response.data.code == 0) {
-            this.$router.push('/artist');
+          if (response.data.code == 0) {
+            this.$router.push("/artist");
           }
         });
     }

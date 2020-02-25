@@ -94,7 +94,13 @@
             solo
             v-model="start"
           ></v-text-field>
-          <v-btn @click="updateVideo()" color="success" block>ยืนยัน</v-btn>
+          <label>รูปหลัก</label>
+          <image-upload @image="MainImageUpload"></image-upload>
+          <label>รูป ศิลปิน</label>
+          <image-upload @image="ArtistImageUpload"></image-upload>
+          <v-btn class="mt-5" @click="updateVideo()" color="success" block
+            >ยืนยัน</v-btn
+          >
         </v-form>
       </v-card>
     </v-flex>
@@ -129,6 +135,12 @@ export default {
     };
   },
   methods: {
+    MainImageUpload(image) {
+      this.image_url = image;
+    },
+    ArtistImageUpload(image) {
+      this.artist_image_url = image;
+    },
     getVideoInfo() {
       axios
         .post(

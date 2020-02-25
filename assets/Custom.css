@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "DBHeavent";
+  src: url("./DBHeavent.ttf");
+}
+
+.v-application {
+  font-family: "DBHeavent" !important;
+}
+
+html {
+  font-size: 1.5rem !important;
+}

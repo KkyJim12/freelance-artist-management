@@ -47,13 +47,6 @@
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="ลิงค์รูป"
-            type="text"
-            solo
-            v-model="image_url"
-          ></v-text-field>
-          <v-text-field
-            label="Solo"
             placeholder="mission"
             type="text"
             solo
@@ -75,13 +68,6 @@
           ></v-text-field>
           <v-text-field
             label="Solo"
-            placeholder="mission รูป"
-            type="text"
-            solo
-            v-model="mission_image_url"
-          ></v-text-field>
-          <v-text-field
-            label="Solo"
             placeholder="mission_start"
             type="text"
             solo
@@ -94,7 +80,11 @@
             solo
             v-model="name"
           ></v-text-field>
-          <v-btn @click="addMission()" color="success" block>ยืนยัน</v-btn>
+          <label>รูปหลัก</label>
+          <image-upload @image="MainImageUpload"></image-upload>
+          <label>รูป mission</label>
+          <image-upload @image="MissionImageUpload"></image-upload>
+          <v-btn class="mt-5" @click="addMission()" color="success" block>ยืนยัน</v-btn>
         </v-form>
       </v-card>
     </v-flex>
@@ -114,7 +104,7 @@ export default {
       boosts_need: "",
       enabled: true,
       category_id: "",
-      image_url: [],
+      image_url: "",
       mission: "",
       mission_desc: "",
       mission_image_url: "",
@@ -125,6 +115,12 @@ export default {
     };
   },
   methods: {
+    MainImageUpload(image) {
+      this.image_url = image;
+    },
+    MissionImageUpload(image) {
+      this.mission_image_url = image;
+    },
     getArtistList() {
       axios
         .post(
@@ -158,7 +154,7 @@ export default {
             mission_desc: this.mission_desc,
             mission_image_url: this.mission_image_url,
             mission_start: this.mission_start,
-            name: this.name,
+            name: this.name
           },
           {
             headers: {

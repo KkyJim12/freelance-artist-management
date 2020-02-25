@@ -3,7 +3,7 @@
     id="foo"
     ref="el"
     :options="options"
-    :destroyDropzone="true"
+    @vdropzone-success="vsuccess"
   ></dropzone>
 </template>
 <script>
@@ -16,7 +16,6 @@ export default {
   },
   data() {
     return {
-      // See https://rowanwins.github.io/vue-dropzone/docs/dist/index.html#/props
       options: {
         url:
           "https://us-central1-star-booster-ais-new-bis.cloudfunctions.net/upload_image",
@@ -29,8 +28,12 @@ export default {
       }
     };
   },
+  methods: {
+    vsuccess: function(file, response) {
+      this.$emit("image", response.data);
+    }
+  },
   mounted() {
-    // Everything is mounted and you can access the dropzone instance
     const instance = this.$refs.el.dropzone;
   }
 };
